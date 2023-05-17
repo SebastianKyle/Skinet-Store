@@ -11,8 +11,9 @@ namespace Skinet.Core.Domain.Entities
   {
     public static ProductType ToProductType(this ProductTypeAddRequest productTypeAddRequest)
     {
+      Random random = new Random();
       ProductType productType = new ProductType() {
-        Id = Guid.NewGuid(),
+        Id = random.Next(0, 100000),
         Name = productTypeAddRequest.Name
       };
 

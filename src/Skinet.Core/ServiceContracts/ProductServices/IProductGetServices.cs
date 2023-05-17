@@ -14,7 +14,7 @@ namespace Skinet.Core.ServiceContracts.ProductServices
     /// </summary>
     public interface IProductGetServices
     {
-        Task<ProductResponse?> GetProductByIdAsync(Guid productID);
+        Task<ProductResponse?> GetProductByIdAsync(int productID);
 
         Task<Pagination<ProductResponse>> GetProductsAsync(ProductSpecParams productSpecParams);
 

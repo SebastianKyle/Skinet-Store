@@ -33,12 +33,12 @@ namespace Skinet.Core.Domain.Specifications
         /// <summary>
         /// Id of product branch to retrieve
         /// </summary>
-        public Guid? BrandId { get; set; }
+        public int? BrandId { get; set; }
 
         /// <summary>
         /// Id of product type to retrieve
         /// </summary>
-        public Guid? TypeId { get; set; }
+        public int? TypeId { get; set; }
 
         /// <summary>
         /// Sorting order

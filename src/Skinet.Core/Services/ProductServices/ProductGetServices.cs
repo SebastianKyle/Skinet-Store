@@ -33,7 +33,7 @@ namespace Skinet.Core.Services.ProductServices
       _mapper = mapper;
     }
 
-    public async Task<ProductResponse?> GetProductByIdAsync(Guid productID)
+    public async Task<ProductResponse?> GetProductByIdAsync(int productID)
     {
       var spec = new ProductsWithTypesAndBrandsSpecification(productID) { };
       Product? matchingProduct = await _productGenericRepo.GetEntityWithSpec(spec);

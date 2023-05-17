@@ -15,7 +15,7 @@ namespace Skinet.Core.Domain.Repository
         /// Get a product based on the given id
         /// </summary>
         /// <param name="productID">Product id to search</param>
-        Task<Product?> GetProduct(Guid productID);
+        Task<Product?> GetProduct(int productID);
 
         /// <summary>
         /// Get all products

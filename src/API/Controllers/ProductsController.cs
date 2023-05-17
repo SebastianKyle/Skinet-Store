@@ -34,7 +34,7 @@ namespace API.Controllers
         [HttpGet("{id}")] 
         [ProducesResponseType(StatusCodes.Status200OK)] 
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)] // let swagger know that this action method will also return a 404 response
-        public async Task<ActionResult<ProductResponse?>> GetProduct(Guid id)
+        public async Task<ActionResult<ProductResponse?>> GetProduct(int id)
         {
             ProductResponse? productResponse = await _productGetServices.GetProductByIdAsync(id);
 

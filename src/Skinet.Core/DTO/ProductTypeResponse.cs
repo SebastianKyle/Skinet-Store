@@ -8,7 +8,7 @@ namespace Skinet.Core.DTO
 {
     public class ProductTypeResponse
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 

@@ -9,8 +9,9 @@ namespace Skinet.Core.Domain.Entities
   {
     public static ProductBrand ToProductBrand(this ProductBrand productBrand)
     {
+      Random random = new Random();
       ProductBrand newProduct = new ProductBrand() {
-        Id = Guid.NewGuid(),
+        Id = random.Next(0, 100000),
         Name = productBrand.Name
       };
 

@@ -20,7 +20,7 @@ namespace Skinet.Infrastructure.Repositories
         _db = db;
     }
 
-    public async Task<T> GetByIdAsync(Guid id)
+    public async Task<T> GetByIdAsync(int id)
     {
         T? matchingItem = await _db.Set<T>().FirstOrDefaultAsync(temp => temp.Id == id);
 

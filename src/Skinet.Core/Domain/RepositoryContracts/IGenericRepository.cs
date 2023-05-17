@@ -9,7 +9,7 @@ namespace Skinet.Core.Domain.RepositoryContracts
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {
-        Task<T> GetByIdAsync(Guid id); 
+        Task<T> GetByIdAsync(int id); 
 
         Task<List<T>> ListAllAsync();
 

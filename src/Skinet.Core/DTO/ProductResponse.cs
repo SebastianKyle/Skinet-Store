@@ -14,7 +14,7 @@ namespace Skinet.Core.DTO
         /// <summary>
         /// The unique ID of product
         /// </summary>
-        public Guid ProductID { get; set; }
+        public int ProductID { get; set; }
 
         /// <summary>
         /// Name of product

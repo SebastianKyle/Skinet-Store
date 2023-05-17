@@ -41,7 +41,7 @@ namespace Skinet.Core.Domain.Entities
         /// <summary>
         /// Product type id
         /// </summary>
-        public Guid ProductTypeID { get; set; }
+        public int ProductTypeID { get; set; }
 
         /// <summary>
         /// Brand of product
@@ -51,7 +51,7 @@ namespace Skinet.Core.Domain.Entities
         /// <summary>
         /// Product brand id
         /// </summary>
-        public Guid ProductBrandID { get; set; }
+        public int ProductBrandID { get; set; }
     }
 
     /// <summary>
@@ -66,8 +66,9 @@ namespace Skinet.Core.Domain.Entities
         /// <returns>The converted object of Product type</returns>
         public static Product ToProduct(this ProductAddRequest productAddRequest)
         {
+            Random random = new Random();
             Product product = new Product() {
-                Id = Guid.NewGuid(),
+                Id = random.Next(0, 100000),
                 ProductName = productAddRequest.ProductName,
                 Description = productAddRequest.Description,
                 Price = productAddRequest.Price,

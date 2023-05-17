@@ -18,7 +18,7 @@ namespace Skinet.Infrastructure.RepositoryContracts
       _storeDbContext = storeDbContext;
     }
 
-    public async Task<Product?> GetProduct(Guid productID)
+    public async Task<Product?> GetProduct(int productID)
     {
       Product? matchingProduct = await _storeDbContext.Products.Include(p => p.ProductBrand)
                                                          .Include(p => p.ProductType)

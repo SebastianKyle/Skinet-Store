@@ -3,7 +3,7 @@ using API.StartupExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var piccoAppCorsPolicy = "CorsPolicy";
+var skinetAppCorsPolicy = "CorsPolicy";
 
 // Add services to the container.
 
@@ -14,7 +14,7 @@ var piccoAppCorsPolicy = "CorsPolicy";
 builder.Services.ConfigureSwaggerServices();
 
 builder.Services.AddCors(option => {
-    option.AddPolicy(piccoAppCorsPolicy, policy => {
+    option.AddPolicy(skinetAppCorsPolicy, policy => {
         policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
     });
 });
@@ -29,10 +29,6 @@ app.UseExceptionHandlingMiddleware();
 // app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
 
 // re-execute pipeline with alternate path in case user try to reach an unavailable controller or action method
 app.UseStatusCodePagesWithReExecute("/Errors/{0}");
@@ -43,7 +39,7 @@ app.UseRouting();
 
 app.UseStaticFiles();
 
-app.UseCors(piccoAppCorsPolicy);
+app.UseCors(skinetAppCorsPolicy);
 
 app.UseHttpsRedirection();
 

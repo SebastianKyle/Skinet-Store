@@ -297,3 +297,6 @@ logs/
 log/
 main.log
 *.log
+
+# redis snapshot file
+*.rdb

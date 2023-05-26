@@ -43,7 +43,7 @@ app.UseCors(skinetAppCorsPolicy);
 
 app.UseHttpsRedirection();
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSwaggerDocumentation();

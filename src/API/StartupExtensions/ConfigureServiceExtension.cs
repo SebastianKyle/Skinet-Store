@@ -10,9 +10,12 @@ using Skinet.Core.Domain.RepositoryContracts;
 using Skinet.Core.Helpers;
 using Skinet.Core.ServiceContracts.BasketServices;
 using Skinet.Core.ServiceContracts.ProductServices;
+using Skinet.Core.ServiceContracts.TokenServices;
 using Skinet.Core.Services.BasketServices;
 using Skinet.Core.Services.ProductServices;
+using Skinet.Core.Services.TokenServices;
 using Skinet.Infrastructure.Data;
+using Skinet.Infrastructure.Identity;
 using Skinet.Infrastructure.Repositories;
 using Skinet.Infrastructure.RepositoryContracts;
 using StackExchange.Redis;
@@ -33,6 +36,8 @@ namespace API.StartupExtensions
             services.AddScoped<IBasketUpdateService, BasketUpdateService>();
             services.AddScoped<IBasketDeleteService, BasketDeleteService>();
 
+            services.AddScoped<ITokenService, TokenService>();
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBasketRepository, BasketRepository>();
 
@@ -44,11 +49,17 @@ namespace API.StartupExtensions
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddDbContext<AppIdentityDbContext>(options => {
+                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+            });
+
             services.AddSingleton<IConnectionMultiplexer>(c => {
                 var config = ConfigurationOptions.Parse(configuration.GetConnectionString("Redis"));
 
                 return ConnectionMultiplexer.Connect(config);
             });
+
+            services.AddIdentityServices(configuration);
 
             // Override the behavior options when checking for Model state response of the [ApiController] attribute
             services.Configure<ApiBehaviorOptions>(options => {

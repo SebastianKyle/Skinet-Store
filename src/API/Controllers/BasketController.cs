@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Skinet.Core.Domain.Entities;
+using Skinet.Core.DTO;
 using Skinet.Core.ServiceContracts.BasketServices;
 
 namespace API.Controllers
@@ -15,9 +17,11 @@ namespace API.Controllers
     private readonly IBasketGetService _basketGetService;
     private readonly IBasketUpdateService _basketUpdateService;
     private readonly IBasketDeleteService _basketDeleteService;
+    private readonly IMapper _mapper;
 
-    public BasketController(IBasketGetService basketGetService, IBasketUpdateService basketUpdateService, IBasketDeleteService basketDeleteService)
+    public BasketController(IBasketGetService basketGetService, IBasketUpdateService basketUpdateService, IBasketDeleteService basketDeleteService, IMapper mapper)
     {
+      _mapper = mapper;
       _basketGetService = basketGetService;
       _basketUpdateService = basketUpdateService;
       _basketDeleteService = basketDeleteService;
@@ -32,8 +36,9 @@ namespace API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasket basket)
+		public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasketDTO basketDTO)
 		{
+			var basket = _mapper.Map<CustomerBasketDTO, CustomerBasket>(basketDTO);	
 			var updatedBasket = await _basketUpdateService.UpdateBasketAsync(basket);
 
 			return Ok(updatedBasket);

@@ -15,6 +15,11 @@ namespace API.Errors
 
     }
 
+    public ApiValidationErrorResponse(IEnumerable<string> errors) : base(400)
+    {
+      Errors = errors;
+    }
+
     public IEnumerable<string> Errors { get; set; }
   }
 }

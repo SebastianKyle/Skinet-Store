@@ -19,6 +19,8 @@ namespace Skinet.Core.Helpers
                                                  .ForMember(m => m.PictureUrl, o => o.MapFrom<ProductPictureUrlResolver>());
 
             CreateMap<Address, AddressDTO>().ReverseMap();
+            CreateMap<BasketItemDTO, BasketItem>().ReverseMap();
+            CreateMap<CustomerBasketDTO, CustomerBasket>().ReverseMap();
         } 
     }
 }

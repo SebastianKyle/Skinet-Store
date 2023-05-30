@@ -9,9 +9,11 @@ using Skinet.Core.Domain.Repository;
 using Skinet.Core.Domain.RepositoryContracts;
 using Skinet.Core.Helpers;
 using Skinet.Core.ServiceContracts.BasketServices;
+using Skinet.Core.ServiceContracts.OrderServices;
 using Skinet.Core.ServiceContracts.ProductServices;
 using Skinet.Core.ServiceContracts.TokenServices;
 using Skinet.Core.Services.BasketServices;
+using Skinet.Core.Services.OrderServices;
 using Skinet.Core.Services.ProductServices;
 using Skinet.Core.Services.TokenServices;
 using Skinet.Infrastructure.Data;
@@ -29,7 +31,6 @@ namespace API.StartupExtensions
             services.AddControllers();
 
             // Add services and repositories
-            services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped<IProductGetServices, ProductGetServices>();
 
             services.AddScoped<IBasketGetService, BasketGetService>();
@@ -38,8 +39,12 @@ namespace API.StartupExtensions
 
             services.AddScoped<ITokenService, TokenService>();
 
+            services.AddScoped<IOrderService, OrderService>();
+
+            services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Add automapper
             services.AddAutoMapper(typeof(MappingProfiles));

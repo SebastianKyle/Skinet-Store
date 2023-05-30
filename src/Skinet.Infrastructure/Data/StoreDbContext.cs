@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Skinet.Core.Domain.Entities;
+using Skinet.Core.Domain.Entities.OrderAggregate;
 
 namespace Skinet.Infrastructure.Data
 {
@@ -18,6 +19,9 @@ namespace Skinet.Infrastructure.Data
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductBrand> ProductBrands { get; set; }
         public virtual DbSet<ProductType> ProductTypes { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderItem> OrderItems { get; set; }
+        public virtual DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +59,16 @@ namespace Skinet.Infrastructure.Data
             {
                 modelBuilder.Entity<Product>().HasData(product);
             }
+
+            // Delivery method seed data
+            string deliveryMethodsData = File.ReadAllText("../Skinet.Infrastructure/Data/SeedData/delivery.json");
+            List<DeliveryMethod> deliveryMethods = System.Text.Json.JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryMethodsData);
+
+            foreach (DeliveryMethod dmMethod in deliveryMethods)
+            {
+                modelBuilder.Entity<DeliveryMethod>().HasData(dmMethod);
+            }
+            
         } 
     }
 }

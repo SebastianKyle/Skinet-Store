@@ -285,16 +285,16 @@ namespace Skinet.Infrastructure.Data.Migrations
                         {
                             Id = "adbffd99-d818-4011-b5c4-fd444de139e6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "544e35b9-eb9e-4794-9201-e81c1c3c4589",
+                            ConcurrencyStamp = "648753d0-fcf5-4730-9705-f36d43996c81",
                             DisplayName = "Lipa",
                             Email = "lipa@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "LIPA@TEST.COM",
                             NormalizedUserName = "LIPA@TEST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOnQJvD2FDc/MVKCNViCgbt3wIYTTLXgmHf0xcncBN6XyPBJCg/ZE6rL+AEp6xav8A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMNL+SFiTor7Ea7lF/MWDVFec9L/cmaglanvP1T2pBh8+hGCHi5AjPSNvCJ0naOekA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4e0c41ca-b432-4257-8154-df8f9d5e18be",
+                            SecurityStamp = "af9f2393-bd7e-4452-a2f1-1c5eab3926a7",
                             TwoFactorEnabled = false,
                             UserName = "lipa@test.com"
                         });

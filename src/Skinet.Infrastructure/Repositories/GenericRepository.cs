@@ -17,26 +17,26 @@ namespace Skinet.Infrastructure.Repositories
 
     public GenericRepository(StoreDbContext db)
     {
-        _db = db;
+      _db = db;
     }
 
     public async Task<T> GetByIdAsync(int id)
     {
-        T? matchingItem = await _db.Set<T>().FirstOrDefaultAsync(temp => temp.Id == id);
+      T? matchingItem = await _db.Set<T>().FirstOrDefaultAsync(temp => temp.Id == id);
 
-        if (matchingItem == null)
-        {
-            throw new ArgumentException(nameof(matchingItem));
-        }
+      if (matchingItem == null)
+      {
+        throw new ArgumentException(nameof(matchingItem));
+      }
 
-        return matchingItem;
+      return matchingItem;
     }
 
     public async Task<List<T>> ListAllAsync()
     {
-        List<T> matchingItems = await _db.Set<T>().ToListAsync();
+      List<T> matchingItems = await _db.Set<T>().ToListAsync();
 
-        return matchingItems;
+      return matchingItems;
     }
 
     public async Task<T> GetEntityWithSpec(ISpecification<T> spec)
@@ -57,6 +57,22 @@ namespace Skinet.Infrastructure.Repositories
     private IQueryable<T> ApplySpecification(ISpecification<T> spec)
     {
       return SpecificationEvaluator<T>.GetQuery(_db.Set<T>().AsQueryable(), spec);
+    }
+
+    public void Add(T entity)
+    {
+      _db.Set<T>().Add(entity);
+    }
+
+    public void Update(T entity)
+    {
+      _db.Set<T>().Attach(entity);
+      _db.Entry(entity).State = EntityState.Modified; // this may add the entity to the list of things that need to be saved after SaveChangesAsync() is called
+    }
+
+    public void Delete(T entity)
+    {
+      _db.Set<T>().Remove(entity);
     }
   }
 }

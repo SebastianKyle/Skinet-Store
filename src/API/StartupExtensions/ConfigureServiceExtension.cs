@@ -10,10 +10,12 @@ using Skinet.Core.Domain.RepositoryContracts;
 using Skinet.Core.Helpers;
 using Skinet.Core.ServiceContracts.BasketServices;
 using Skinet.Core.ServiceContracts.OrderServices;
+using Skinet.Core.ServiceContracts.PaymentServices;
 using Skinet.Core.ServiceContracts.ProductServices;
 using Skinet.Core.ServiceContracts.TokenServices;
 using Skinet.Core.Services.BasketServices;
 using Skinet.Core.Services.OrderServices;
+using Skinet.Core.Services.PaymentServices;
 using Skinet.Core.Services.ProductServices;
 using Skinet.Core.Services.TokenServices;
 using Skinet.Infrastructure.Data;
@@ -36,10 +38,9 @@ namespace API.StartupExtensions
             services.AddScoped<IBasketGetService, BasketGetService>();
             services.AddScoped<IBasketUpdateService, BasketUpdateService>();
             services.AddScoped<IBasketDeleteService, BasketDeleteService>();
-
             services.AddScoped<ITokenService, TokenService>();
-
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
             services.AddScoped<IProductsRepository, ProductsRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

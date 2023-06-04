@@ -11,10 +11,10 @@ namespace Skinet.Core.Domain.Entities.OrderAggregate
         [EnumMember(Value = "Pending")]
         Pending, 
 
-        [EnumMember(Value = "PaymentReceived")]
+        [EnumMember(Value = "Payment Received")]
         PaymentReceived,
 
-        [EnumMember(Value = "PaymentFailed")]
+        [EnumMember(Value = "Payment Failed")]
         PaymentFailed
     }
 }

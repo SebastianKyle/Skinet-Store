@@ -7,3 +7,7 @@ export interface IProduct {
   productType: string,
   productBrand: string
 }
+
+export interface IProductList {
+  products: IProduct[];
+}

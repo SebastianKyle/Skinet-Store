@@ -17,12 +17,12 @@ export class CheckoutSuccessComponent implements OnInit {
       this.order = state as IOrder;
     }
     else {
-
+      this.order = null;
     }
+    console.log(this.order);
   }
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 
 }

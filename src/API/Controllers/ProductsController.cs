@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Errors;
+using API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Skinet.Core.Domain.Entities;
 using Skinet.Core.Domain.Specifications;
@@ -24,6 +25,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Cached(600)]
         public async Task<ActionResult<Pagination<ProductResponse>>> GetProducts([FromQuery]ProductSpecParams productSpecParams)
         {
             Pagination<ProductResponse> paginationResponse = await _productGetServices.GetProductsAsync(productSpecParams);
@@ -34,6 +36,7 @@ namespace API.Controllers
         [HttpGet("{id}")] 
         [ProducesResponseType(StatusCodes.Status200OK)] 
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)] // let swagger know that this action method will also return a 404 response
+        [Cached(600)]
         public async Task<ActionResult<ProductResponse?>> GetProduct(int id)
         {
             ProductResponse? productResponse = await _productGetServices.GetProductByIdAsync(id);
@@ -47,6 +50,7 @@ namespace API.Controllers
         }
 
         [HttpGet("brands")]
+        [Cached(600)]
         public async Task<ActionResult<List<ProductBrandResponse>>> GetBrands()
         {
             List<ProductBrandResponse> brandResponses = await _productGetServices.GetProductBrandsAsync();
@@ -55,6 +59,7 @@ namespace API.Controllers
         }
 
         [HttpGet("types")]
+        [Cached(600)]
         public async Task<ActionResult<List<ProductTypeResponse>>> GetTypes()
         {
             List<ProductTypeResponse> typeResponses = await _productGetServices.GetProductTypesAsync();

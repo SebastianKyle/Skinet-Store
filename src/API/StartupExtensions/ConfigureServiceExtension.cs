@@ -9,11 +9,13 @@ using Skinet.Core.Domain.Repository;
 using Skinet.Core.Domain.RepositoryContracts;
 using Skinet.Core.Helpers;
 using Skinet.Core.ServiceContracts.BasketServices;
+using Skinet.Core.ServiceContracts.CacheServices;
 using Skinet.Core.ServiceContracts.OrderServices;
 using Skinet.Core.ServiceContracts.PaymentServices;
 using Skinet.Core.ServiceContracts.ProductServices;
 using Skinet.Core.ServiceContracts.TokenServices;
 using Skinet.Core.Services.BasketServices;
+using Skinet.Core.Services.CacheServices;
 using Skinet.Core.Services.OrderServices;
 using Skinet.Core.Services.PaymentServices;
 using Skinet.Core.Services.ProductServices;
@@ -33,8 +35,9 @@ namespace API.StartupExtensions
             services.AddControllers();
 
             // Add services and repositories
-            services.AddScoped<IProductGetServices, ProductGetServices>();
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
 
+            services.AddScoped<IProductGetServices, ProductGetServices>();
             services.AddScoped<IBasketGetService, BasketGetService>();
             services.AddScoped<IBasketUpdateService, BasketUpdateService>();
             services.AddScoped<IBasketDeleteService, BasketDeleteService>();
@@ -52,11 +55,11 @@ namespace API.StartupExtensions
 
             // Store db context
             services.AddDbContext<StoreDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddDbContext<AppIdentityDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+                options.UseNpgsql(configuration.GetConnectionString("IdentityConnection"));
             });
 
             services.AddSingleton<IConnectionMultiplexer>(c => {

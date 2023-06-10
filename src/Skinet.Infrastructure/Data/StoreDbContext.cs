@@ -33,8 +33,9 @@ namespace Skinet.Infrastructure.Data
             // Configure using the Product configuration class
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             // Brands seed data
-            string brandsData = File.ReadAllText("../Skinet.Infrastructure/Data/SeedData/brands.json");
+            string brandsData = File.ReadAllText(path + @"/Data/SeedData/brands.json");
             List<ProductBrand> brands = System.Text.Json.JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
 
             foreach (ProductBrand brand in brands)
@@ -43,7 +44,7 @@ namespace Skinet.Infrastructure.Data
             }
 
             // Types seed data
-            string typesData = File.ReadAllText("../Skinet.Infrastructure/Data/SeedData/types.json");
+            string typesData = File.ReadAllText(path + @"/Data/SeedData/types.json");
             List<ProductType> types = System.Text.Json.JsonSerializer.Deserialize<List<ProductType>>(typesData);
 
             foreach (ProductType type in types)
@@ -52,7 +53,7 @@ namespace Skinet.Infrastructure.Data
             }
 
             // Products seed data
-            string productsData = File.ReadAllText("../Skinet.Infrastructure/Data/SeedData/products.json");
+            string productsData = File.ReadAllText(path + @"/Data/SeedData/products.json");
             List<Product> products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(productsData);
 
             foreach (Product product in products)
@@ -61,7 +62,7 @@ namespace Skinet.Infrastructure.Data
             }
 
             // Delivery method seed data
-            string deliveryMethodsData = File.ReadAllText("../Skinet.Infrastructure/Data/SeedData/delivery.json");
+            string deliveryMethodsData = File.ReadAllText(path + @"/Data/SeedData/delivery.json");
             List<DeliveryMethod> deliveryMethods = System.Text.Json.JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryMethodsData);
 
             foreach (DeliveryMethod dmMethod in deliveryMethods)

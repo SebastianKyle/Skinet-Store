@@ -61,7 +61,6 @@ export class CheckoutPaymentComponent implements AfterViewInit, OnDestroy {
   }
 
   onChange(event) {
-    console.log(event);
     if (event.error) {
       this.cardErrors = event.error.message; // error comming from Stripe
     }

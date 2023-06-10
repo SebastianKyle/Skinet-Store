@@ -5,7 +5,7 @@ import { PagingHeaderComponent } from './components/paging-header/paging-header.
 import { PagerComponent } from './components/pager/pager.component'
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { OrderTotalsComponent } from './components/order-totals/order-totals.component'
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TextInputComponent } from './components/text-input/text-input.component'
 import { CdkStepperModule } from '@angular/cdk/stepper';
@@ -13,7 +13,6 @@ import { StepperComponent } from './components/stepper/stepper.component';
 import { BasketSummaryComponent } from './components/basket-summary/basket-summary.component'
 import { RouterModule } from '@angular/router';
 import { ProductsSummaryComponent } from './components/products-summary/products-summary.component';
-import { ProductsSummaryService } from './components/products-summary/products-summary.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,8 @@ import { ProductsSummaryService } from './components/products-summary/products-s
     BsDropdownModule.forRoot(),
     ReactiveFormsModule,
     CdkStepperModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   exports: [
     PaginationModule,
@@ -41,6 +41,7 @@ import { ProductsSummaryService } from './components/products-summary/products-s
     CarouselModule,
     OrderTotalsComponent,
     ReactiveFormsModule,
+    FormsModule,
     BsDropdownModule,
     TextInputComponent,
     CdkStepperModule,

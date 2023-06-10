@@ -1,24 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Skinet.Infrastructure.src.Data.Migrations
+namespace Skinet.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class PostgresInitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "DeliveryMethods",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ShortName = table.Column<string>(type: "text", nullable: false),
+                    DeliveryTime = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryMethods", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductBrands",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,9 +47,9 @@ namespace Skinet.Infrastructure.src.Data.Migrations
                 name: "ProductTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,17 +57,47 @@ namespace Skinet.Infrastructure.src.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    BuyerEmail = table.Column<string>(type: "text", nullable: false),
+                    OrderDate = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    ShipToAddress_FirstName = table.Column<string>(type: "text", nullable: false),
+                    ShipToAddress_LastName = table.Column<string>(type: "text", nullable: false),
+                    ShipToAddress_Street = table.Column<string>(type: "text", nullable: false),
+                    ShipToAddress_City = table.Column<string>(type: "text", nullable: false),
+                    ShipToAddress_State = table.Column<string>(type: "text", nullable: false),
+                    ShipToAddress_ZipCode = table.Column<string>(type: "text", nullable: false),
+                    DeliveryMethodId = table.Column<int>(type: "integer", nullable: false),
+                    SubTotal = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false),
+                    PaymentIntentId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_DeliveryMethods_DeliveryMethodId",
+                        column: x => x.DeliveryMethodId,
+                        principalTable: "DeliveryMethods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductTypeID = table.Column<int>(type: "int", nullable: false),
-                    ProductBrandID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ProductName = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    PictureUrl = table.Column<string>(type: "text", nullable: false),
+                    ProductTypeID = table.Column<int>(type: "integer", nullable: false),
+                    ProductBrandID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,6 +114,41 @@ namespace Skinet.Infrastructure.src.Data.Migrations
                         principalTable: "ProductTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ItemOrdered_ProductItemId = table.Column<int>(type: "integer", nullable: false),
+                    ItemOrdered_ProductName = table.Column<string>(type: "text", nullable: false),
+                    ItemOrdered_PictureUrl = table.Column<string>(type: "text", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    OrderId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "DeliveryMethods",
+                columns: new[] { "Id", "DeliveryTime", "Description", "Price", "ShortName" },
+                values: new object[,]
+                {
+                    { 1, "1-2 Days", "Fastest delivery time", 10m, "UPS1" },
+                    { 2, "2-5 Days", "Get it within 5 days", 5m, "UPS2" },
+                    { 3, "5-10 Days", "Slower but cheap", 2m, "UPS3" },
+                    { 4, "1-2 Weeks", "Free! You get what you pay for", 0m, "FREE" }
                 });
 
             migrationBuilder.InsertData(
@@ -118,6 +201,16 @@ namespace Skinet.Infrastructure.src.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_DeliveryMethodId",
+                table: "Orders",
+                column: "DeliveryMethodId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductBrandID",
                 table: "Products",
                 column: "ProductBrandID");
@@ -132,13 +225,22 @@ namespace Skinet.Infrastructure.src.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "OrderItems");
+
+            migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "ProductBrands");
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryMethods");
         }
     }
 }

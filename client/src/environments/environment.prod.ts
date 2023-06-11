@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://dmt-skinet-store.azurewebsites.net/api/'
+  apiUrl: 'https://dmt-skinet.azurewebsites.net/api/'
 };

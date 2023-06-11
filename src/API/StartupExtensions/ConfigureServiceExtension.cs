@@ -55,15 +55,15 @@ namespace API.StartupExtensions
 
             // Store db context
             services.AddDbContext<StoreDbContext>(options => {
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddDbContext<AppIdentityDbContext>(options => {
-                options.UseNpgsql(configuration.GetConnectionString("IdentityConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
             });
 
             services.AddSingleton<IConnectionMultiplexer>(c => {
-                var config = ConfigurationOptions.Parse(configuration.GetConnectionString("Redis"));
+                var config = ConfigurationOptions.Parse(configuration.GetConnectionString("AzureCacheForRedis"));
 
                 return ConnectionMultiplexer.Connect(config);
             });

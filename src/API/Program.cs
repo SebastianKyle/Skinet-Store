@@ -61,6 +61,13 @@ app.UseAuthorization();
 app.UseSwaggerDocumentation();
 
 app.MapControllers();
+app.UseMvc(routes =>
+{
+    routes.MapRoute(
+        name: "fallback",
+        template: "{*url}",
+        defaults: new { controller = "Fallback", action = "Index" });
+});
 app.MapFallbackToController("Index", "Fallback");
 
 using var scope = app.Services.CreateScope();

@@ -11,9 +11,7 @@ namespace API.Controllers
         [Route("/")]
         public IActionResult Index()
         {
-            // return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "wwwroot", "index.html"), "text/HTML");
-            // return PhysicalFile(Path.Combine("wwwroot", "index.html"), "text/HTML");
-            return File("~/wwwroot/index.html", "text/HTML");
+            return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "index.html"), "text/HTML");
         } 
     }
 }

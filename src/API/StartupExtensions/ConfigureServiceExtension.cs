@@ -55,11 +55,15 @@ namespace API.StartupExtensions
 
             // Store db context
             services.AddDbContext<StoreDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => {
+                    sqlServerOptions.EnableRetryOnFailure();
+                });
             });
 
             services.AddDbContext<AppIdentityDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"), sqlServerOptions => {
+                    sqlServerOptions.EnableRetryOnFailure();
+                });
             });
 
             services.AddSingleton<IConnectionMultiplexer>(c => {

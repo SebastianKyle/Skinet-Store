@@ -12,6 +12,7 @@ import { map, of, switchMap, timer } from 'rxjs';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   errors: string[];
+  complexPassword = "(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?/&gt;.&lt;,])(?!.*\s).*$";
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) {
 
@@ -25,10 +26,10 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       displayName: [null, [Validators.required]],
       email: [null, 
-        [Validators.required, Validators.pattern('^[\\w-\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')],
+        [Validators.required, Validators.email],
         [this.validateEmailNotTaken()]
       ],
-      password: [null, [Validators.required]]
+      password: [null, [Validators.required, Validators.pattern(this.complexPassword)]]
     });
   }
 

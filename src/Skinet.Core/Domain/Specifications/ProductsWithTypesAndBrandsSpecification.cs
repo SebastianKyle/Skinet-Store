@@ -23,7 +23,7 @@ namespace Skinet.Core.Domain.Specifications
       AddInclude(x => x.ProductType);
       AddOrderBy(x => x.ProductName);
 
-      // When user selece a page index, we will skip the records of the previous pages, and take {pageSize} entities of remaining records
+      // When user select a page index, we will skip the records of the previous pages, and take {pageSize} entities of remaining records
       ApplyPaging(productSpecParams.PageSize * (productSpecParams.PageIndex - 1), productSpecParams.PageSize);
 
       if (!string.IsNullOrEmpty(productSpecParams.Sort))

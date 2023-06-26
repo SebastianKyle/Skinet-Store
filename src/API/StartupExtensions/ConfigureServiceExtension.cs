@@ -55,19 +55,45 @@ namespace API.StartupExtensions
 
             // Store db context
             services.AddDbContext<StoreDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => {
-                    sqlServerOptions.EnableRetryOnFailure();
-                });
+                if (env.IsDevelopment())
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), sqlServerOptions => {
+                        sqlServerOptions.EnableRetryOnFailure();
+                    });
+                }
+                else if (env.IsProduction())
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("AzureDbConnection"), sqlServerOptions => {
+                        sqlServerOptions.EnableRetryOnFailure();
+                    });
+                }
             });
 
             services.AddDbContext<AppIdentityDbContext>(options => {
-                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"), sqlServerOptions => {
-                    sqlServerOptions.EnableRetryOnFailure();
-                });
+                if (env.IsDevelopment())
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"), sqlServerOptions => {
+                        sqlServerOptions.EnableRetryOnFailure();
+                    });
+                }
+                else if (env.IsProduction())
+                {
+                    options.UseSqlServer(configuration.GetConnectionString("AzureIdentityDbConnection"), sqlServerOptions => {
+                        sqlServerOptions.EnableRetryOnFailure();
+                    });
+                }
             });
 
             services.AddSingleton<IConnectionMultiplexer>(c => {
-                var config = ConfigurationOptions.Parse(configuration.GetConnectionString("AzureCacheForRedis"));
+                var config = new ConfigurationOptions();
+                if (env.IsDevelopment())
+                {
+                    config = ConfigurationOptions.Parse(configuration.GetConnectionString("Redis")); 
+                }
+                else if (env.IsProduction())
+                {
+                    config = ConfigurationOptions.Parse(configuration.GetConnectionString("AzureCacheForRedis"));
+                }
 
                 return ConnectionMultiplexer.Connect(config);
             });

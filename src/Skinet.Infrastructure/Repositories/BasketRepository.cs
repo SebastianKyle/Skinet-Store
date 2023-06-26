@@ -33,7 +33,7 @@ namespace Skinet.Infrastructure.Repositories
     public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
     {
 			// Update
-      var created = await _db.StringSetAsync(basket.Id, JsonSerializer.Serialize(basket), TimeSpan.FromDays(30));
+      var created = await _db.StringSetAsync(basket.Id, JsonSerializer.Serialize(basket), TimeSpan.FromDays(1));
 
 			if (!created) 
 			{

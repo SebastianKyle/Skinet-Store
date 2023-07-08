@@ -30,7 +30,8 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.email],
         [this.validateEmailNotTaken()]
       ],
-      password: [null, [Validators.required, Validators.pattern(this.complexPassword)]]
+      // password: [null, [Validators.required, Validators.pattern(this.complexPassword)]]
+      password: [null, [Validators.required]]
     });
   }
 

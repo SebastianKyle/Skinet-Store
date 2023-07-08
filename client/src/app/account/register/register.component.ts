@@ -12,7 +12,8 @@ import { map, of, switchMap, timer } from 'rxjs';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   errors: string[];
-  complexPassword = /^(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?\&gt;.&lt;,])(?!.*\s).*$/;
+  // complexPassword = /^(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&amp;*()_+}{&quot;:;'?\&gt;.&lt;,])(?!.*\s).*$/;
+  complexPassword = /^(?=^.{6,10}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+}{":;'?>.<,])(?!.*\s).*$/;
 
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) {
 
